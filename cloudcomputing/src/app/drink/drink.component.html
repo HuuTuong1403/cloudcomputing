@@ -1,0 +1,37 @@
+<div *ngIf="isSelect()" class="w-full h-full overflow-y-scroll">
+  <ng-container *ngTemplateOutlet="isTrue"></ng-container>
+</div>
+<div *ngIf="!isSelect()">
+  <ng-container *ngTemplateOutlet="isFalse"></ng-container>
+</div>
+
+<ng-template #isTrue>
+  <div class="my-5 text-3xl text-center font-bold">Các loại thức uống</div>
+  <div class="w-full h-full flex items-center justify-center">
+    <div class="w-3/4">
+      <nz-table #basicTable nzBordered [nzData]="DrinkArray" [nzPageSize]="3">
+        <thead>
+          <tr>
+            <th>Ảnh</th>
+            <th>Tên thức uống</th>
+            <th>Mô tả</th>
+            <th>Giá</th>
+            <th>Loại</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of basicTable.data">
+          <tr>
+            <td class="w-28"><img class="w-28" src="{{ item.Image }}"></td>
+            <td>{{ item.DrinkName }}</td>
+            <td>{{ item.Description }}</td>
+            <td>{{ item.Price }}</td>
+            <td>{{ item.DrinkType }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</ng-template>
+<ng-template #isFalse>
+  <router-outlet></router-outlet>
+</ng-template>

@@ -1,0 +1,27 @@
+<nz-layout class="w-full h-screen">
+  <nz-header class="w-full">
+    <ul nz-menu nzMode="horizontal" class="bg-white mx-28">
+      <li nz-menu-item nzSelected>nav 1</li>
+      <li nz-menu-item>nav 2</li>
+      <li nz-menu-item>nav 3</li>
+    </ul>
+  </nz-header>
+  <nz-layout class="mt-5">
+    <nz-sider nzWidth="200px" nzTheme="light">
+      <ul nz-menu nzMode="inline">
+        <li nz-submenu nzIcon="appstore-add" nzTitle="Thức uống" nzOpen> 
+          <ul>
+            <li nz-menu-item [nzSelected]="this.isSelected('/add-drink')" routerLink="/drink/add-drink">Thêm thức uống</li>
+            <li nz-menu-item [nzSelected]="this.isSelected('/update-drink')" routerLink="/drink/update-drink">Chỉnh sửa thức uống</li>
+            <li nz-menu-item [nzSelected]="this.isSelected('/delete-drink')" routerLink="/drink/delete-drink">Xóa thức uống</li>
+          </ul>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout class="h-full ml-5">
+      <nz-content class="h-full bg-white">
+        <router-outlet></router-outlet>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>
