@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { DrinkService } from '../service/drink.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-drink',
@@ -11,12 +12,15 @@ import { DrinkService } from '../service/drink.service';
 export class DrinkComponent implements OnInit{
 
   DrinkArray: any[] = [];
+  active = true;
 
   constructor(private router: Router,
               private drinkService: DrinkService,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute,
+              private title: Title) {}
 
   ngOnInit(): void {
+    this.title.setTitle('Quản lý');
     this.isSelect();
     this.getDrinks();
     const data = [];
@@ -25,11 +29,17 @@ export class DrinkComponent implements OnInit{
     }
   }
 
+  reLoad(){
+    this.active = true;
+    this.getDrinks();
+  }
+
   getDrinks(){
     this.drinkService.getDrinksAWS().subscribe(
       (res) => {
         this.DrinkArray = res;
         this.drinkService.setSession(this.DrinkArray);
+        this.active = false;
       },
       (err) => {
 

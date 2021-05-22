@@ -1,0 +1,57 @@
+<div *ngIf="active" class="relative w-full h-full">
+  <ng-container>
+    <nz-spin class="absolute top-1/2 left-1/2" [nzSpinning]="active" nzSimple [nzSize]="'large'"></nz-spin>
+  </ng-container>
+</div>
+<div *ngIf="!active">
+  <ng-container *ngTemplateOutlet="drink"></ng-container>
+</div>
+
+<ng-template #drink>
+  <div class="w-full h-full relative">
+    <i nz-icon nzType="rollback" nzTheme="outline" class="absolute top-3 left-10 text-4xl cursor-pointer text-gray-400 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:text-black hover:border-none border-none" (click)="turnBack()"></i>
+    <div class="my-5 text-3xl text-center font-bold">Danh sách thực đơn bị xóa</div>
+    <div class="w-full h-full flex items-center justify-center">
+      <div *ngIf="DrinkDeleteArray.length === 0">
+        <img src="https://cdn.dribbble.com/users/463734/screenshots/2016792/empty-result_shot.png" class="w-4/6 ml-auto mr-auto">
+        <div class="text-2xl text-center">Không có thực đơn nào ở trong thùng rác</div>
+      </div>
+      <div class="w-11/12 mt-3" *ngIf="DrinkDeleteArray.length !== 0">
+        <nz-table #basicTable nzBordered [nzData]="DrinkDeleteArray" [nzPageSize]="3">
+          <thead>
+            <tr>
+              <th>Ảnh</th>
+              <th>Tên thức uống</th>
+              <th>Mô tả</th>
+              <th>Giá</th>
+              <th>Loại</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let item of basicTable.data">
+            <tr>
+              <td class="w-28"><img class="w-28" src="{{ item.Image }}"></td>
+              <td>{{ item.DrinkName }}</td>
+              <td>{{ item.Description }}</td>
+              <td>{{ item.Price }}</td>
+              <td>{{ item.DrinkType }}</td>
+              <td>
+                <div class="flex">
+                  <div>
+                    <i class="text-xl cursor-pointer border-1 border-gray-100 rounded-md px-2 py-1 mr-3 ml-auto transition duration-500 ease-in-out bg-red-400 hover:bg-red-300 transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:border-none border-none shadow-md" nz-icon nzType="delete" nzTheme="outline" (click)="deleteHardDrink(item.DrinkName)"></i>
+                    <div class="text-xs text-center w-9 mt-1">Xoá</div>
+                  </div>
+                  <div>
+                    <i class="text-xl cursor-pointer border-1 border-gray-100 rounded-md px-2 py-1 mr-auto ml-auto transition duration-500 ease-in-out bg-green-400 hover:bg-green-300 transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:border-none border-none shadow-md" nz-icon nzType="retweet" nzTheme="outline" (click)="restoreDrink(item.DrinkName)"></i>
+                    <div class="text-xs text-center mt-1">Khôi phục</div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </div>
+
+</ng-template>

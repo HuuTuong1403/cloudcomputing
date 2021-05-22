@@ -1,67 +1,79 @@
-<div class="w-full h-full flex items-center justify-center relative">
-  <i nz-icon nzType="rollback" nzTheme="outline" class="absolute top-3 left-10 text-4xl cursor-pointer shadow-md" (click)="turnBack()"></i>
-  <nz-card class="w-3/4 h-full ml-10 mt-8 cursor-default" [nzHoverable]="true" >
-    <div class="mb-5 text-3xl text-center font-bold">Thêm thực đơn</div>
-    <form nz-form [formGroup]="addDrinkForm" (ngSubmit)="onSubmitForm()">
-      <nz-form-item>
-        <nz-form-label class="text-base" [nzSm]="6" [nzXs]="24" nzFor="DrinkName">Tên thực đơn</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Tên thực đơn không được trống">
-          <input class="text-xl" class="rounded-xl" nz-input placeholder="Nhập tên thực đơn" formControlName="DrinkName" id="DrinkName">
-        </nz-form-control>
-      </nz-form-item>
+<div *ngIf="active" class="relative w-full h-full">
+  <ng-container>
+    <nz-spin class="absolute top-1/2 left-1/2" [nzSpinning]="active" nzSimple [nzSize]="'large'"></nz-spin>
+  </ng-container>
+</div>
+<div *ngIf="!active">
+  <ng-container *ngTemplateOutlet="drinkDetail"></ng-container>
+</div>
 
-      <nz-form-item>
-        <nz-form-label class="text-base" [nzSm]="6" [nzXs]="24" nzFor="Description">Mô tả</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Mô tả không được trống">
-          <textarea class="text-xl" class="rounded-xl" rows="4" nz-input placeholder="Nhập mô tả" formControlName="Description" id="Description"></textarea>
-        </nz-form-control>
-      </nz-form-item>
+<ng-template #drinkDetail>
+  <div class="w-full h-full flex items-center justify-center relative mb-10">
+    <i nz-icon nzType="rollback" nzTheme="outline" class="absolute top-3 left-10 text-4xl cursor-pointer text-gray-400 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:text-black hover:border-none border-none" (click)="turnBack()"></i>
+    <nz-card class="w-3/4 h-full ml-10 mt-8 cursor-default" [nzHoverable]="true" >
+      <div class="mb-5 text-3xl text-center font-bold">Thêm thực đơn</div>
+      <form nz-form [formGroup]="addDrinkForm" (ngSubmit)="onSubmitForm()">
+        <nz-form-item>
+          <nz-form-label class="text-base" [nzSm]="6" [nzXs]="24" nzFor="DrinkName">Tên thực đơn</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Tên thực đơn không được trống">
+            <input class="text-xl" class="rounded-xl" nz-input placeholder="Nhập tên thực đơn" formControlName="DrinkName" id="DrinkName">
+          </nz-form-control>
+        </nz-form-item>
 
-      <nz-form-item>
-        <nz-form-label class="text-base" [nzSm]="6" [nzXs]="24" nzFor="Price">Giá tiền</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorPrice">
-          <input class="text-xl" class="rounded-xl" nz-input placeholder="Nhập giá tiền" formControlName="Price" id="Price">
-        </nz-form-control>
-        <ng-template #errorPrice let-control>
-          <ng-container *ngIf="control.hasError('minlength') || control.hasError('pattern')">
-            <div>Giá tiền phải là số và trên 1000</div>
-          </ng-container>
-          <ng-container *ngIf="control.hasError('required')">
-            <div>Giá tiền không được trống</div>
-          </ng-container>
-        </ng-template>
-      </nz-form-item>
+        <nz-form-item>
+          <nz-form-label class="text-base" [nzSm]="6" [nzXs]="24" nzFor="Description">Mô tả</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Mô tả không được trống">
+            <textarea class="text-xl" class="rounded-xl" rows="4" nz-input placeholder="Nhập mô tả" formControlName="Description" id="Description"></textarea>
+          </nz-form-control>
+        </nz-form-item>
 
-      <nz-form-item>
-        <nz-form-label class="text-base" nzFor="DrinkType" [nzSm]="6" [nzXs]="24">Loại</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Chưa chọn loại thực đơn">
-          <nz-select class="text-base" nzPlaceHolder="Chọn loại thực đơn" formControlName="DrinkType" id="DrinkType">
-            <nz-option *ngFor="let item of typeDrink" [nzValue]="item.DrinkType" [nzLabel]="item.DrinkType"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label class="text-xl" [nzSm]="6" [nzXs]="24" nzFor="Image">Thêm hình ảnh</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorImage">
-          <label for="Image" class="cursor-pointer px-10 py-3 rounded-xl bg-yellow-300 font-bold uppercase shadow-md"><i class="text-xl mr-3" nz-icon nzType="cloud-upload" nzTheme="outline"></i>Upload Image</label>
-          <span *ngIf="Image && isClear" class="text-base ml-3">{{ Image.name }}<i class="text-xl ml-3 cursor-pointer border-1 border-gray-100 rounded-md px-2 py-1 bg-green-300" (click)="resetImage()" nz-icon nzType="delete" nzTheme="outline"></i></span>
-          <input class="text-base hidden" type="file" nz-input id="Image" formControlName="Image" (change)="onFileChangedoc($event)" accept=".jpeg,.jpg,.png" #ImageDrinkUpload>
-          <ng-template #errorImage let-control>
-            <ng-container *ngIf="control.hasError('extension')">
-              <div class="mt-2" >Bạn phải chọn file *jpeg, *jpg, *png</div>
+        <nz-form-item>
+          <nz-form-label class="text-base" [nzSm]="6" [nzXs]="24" nzFor="Price">Giá tiền</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorPrice">
+            <input class="text-xl" class="rounded-xl" nz-input placeholder="Nhập giá tiền" formControlName="Price" id="Price">
+          </nz-form-control>
+          <ng-template #errorPrice let-control>
+            <ng-container *ngIf="control.hasError('minlength') || control.hasError('pattern')">
+              <div>Giá tiền phải là số và trên 1000</div>
             </ng-container>
             <ng-container *ngIf="control.hasError('required')">
-              <div class="mt-2">Bạn phải thêm hình ảnh cho thực đơn</div>
+              <div>Giá tiền không được trống</div>
             </ng-container>
           </ng-template>
-        </nz-form-control>
-      </nz-form-item>
+        </nz-form-item>
 
-      <div class="flex justify-center items-center ">
-        <button class="rounded-xl px-16 py-3 mr-10 uppercase font-bold bg-yellow-400 shadow-md">Hủy</button>
-        <button class="rounded-xl px-10 py-3 ml-10 uppercase font-bold bg-yellow-400 shadow-md" type="submit">Thêm thực đơn</button>
-      </div>
-    </form>
-  </nz-card>
-</div>
+        <nz-form-item>
+          <nz-form-label class="text-base" nzFor="DrinkType" [nzSm]="6" [nzXs]="24">Loại</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Chưa chọn loại thực đơn">
+            <nz-select class="text-base" nzPlaceHolder="Chọn loại thực đơn" formControlName="DrinkType" id="DrinkType">
+              <nz-option *ngFor="let item of typeDrink" [nzValue]="item.DrinkType" [nzLabel]="item.DrinkType"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label class="text-xl" [nzSm]="6" [nzXs]="24" nzFor="Image">Thêm hình ảnh</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorImage">
+            <label for="Image" class="cursor-pointer px-10 py-3 rounded-xl transition duration-500 ease-in-out bg-yellow-300 hover:bg-yellow-400 transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:border-none border-none font-bold uppercase shadow-md"><i class="text-xl mr-3" nz-icon nzType="cloud-upload" nzTheme="outline"></i>Upload Image</label>
+            <span *ngIf="Image && isClear" class="text-base ml-3">{{ Image.name }}<i class="text-xl ml-3 cursor-pointer border-1 border-gray-100 rounded-md px-2 py-1 bg-green-300" (click)="resetImage()" nz-icon nzType="delete" nzTheme="outline"></i></span>
+            <input class="text-base hidden" type="file" nz-input id="Image" formControlName="Image" (change)="onFileChangedoc($event)" accept=".jpeg,.jpg,.png" #ImageDrinkUpload>
+            <ng-template #errorImage let-control>
+              <ng-container *ngIf="control.hasError('extension')">
+                <div class="mt-2" >Bạn phải chọn file *jpeg, *jpg, *png</div>
+              </ng-container>
+              <ng-container *ngIf="control.hasError('required')">
+                <div class="mt-2">Bạn phải thêm hình ảnh cho thực đơn</div>
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <div class="flex justify-center items-center ">
+          <button class="rounded-xl px-16 mr-10 uppercase font-bold shadow-md transition duration-500 ease-in-out bg-red-400 hover:bg-red-500 transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:border-none border-none" type="button" nz-button (click)="cancelForm()">Hủy</button>
+          <button class="rounded-xl px-10 ml-10 uppercase font-bold transition duration-500 ease-in-out bg-green-400 hover:bg-green-500 transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:border-none border-none shadow-md" type="submit" nz-button [nzLoading]="isLoading">Thêm thực đơn</button>
+        </div>
+      </form>
+    </nz-card>
+  </div>
+
+</ng-template>

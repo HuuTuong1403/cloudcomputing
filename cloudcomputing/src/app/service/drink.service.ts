@@ -45,4 +45,16 @@ export class DrinkService {
   deleteDrink(DrinkName: string): Observable<any>{
     return this.http.delete<any>(this.local + 'drinks/delete-drink', { params: { DrinkName } });
   }
+
+  getDrinkDelete(): Observable<any[]>{
+    return this.http.get<any[]>(this.local + 'drinks/restore-drink');
+  }
+
+  deleteHardDrink(DrinkName: string): Observable<any>{
+    return this.http.delete<any>(this.local + 'drinks/delete-hard-drink', { params: { DrinkName }} );
+  }
+
+  restoreDrink(DrinkName: string): Observable<any>{
+    return this.http.delete<any>(this.local + 'drinks/restore-drink', {  params: { DrinkName }});
+  }
 }

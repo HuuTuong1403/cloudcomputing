@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +9,25 @@ import { Title } from '@angular/platform-browser';
 export class AppComponent {
 
   constructor(private router: Router,
-    private title: Title){
-      title.setTitle("Trang chủ");
-    }
+    private route: ActivatedRoute){}
 
   isSelected(route: string): boolean{
-    var router = '/drink' + route;
+    var router;
+    if(route == '/drink'){
+      router = route;
+      return true;
+    }
+    else{
+      router = '/drink' + route
+    }
     return router=== this.router.url;
+  }
+
+  isRouter(): boolean{
+    if(this.router.url != '/menu'){
+      return false;
+    }
+
+    return true;
   }
 }

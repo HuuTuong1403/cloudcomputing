@@ -15,6 +15,8 @@ export class AddDrinkComponent implements OnInit {
   addDrinkForm!: FormGroup;
   @ViewChild('ImageDrinkUpload') ImageDrinkUpload!: ElementRef;
   Image!: File;
+  isLoading = false;
+  active = true;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -31,6 +33,9 @@ export class AddDrinkComponent implements OnInit {
       Image: ["", [Validators.required ,RxwebValidators.extension({extensions:["jpeg", "png", "jpg"]})]]
     })
     this.getDrinkType();
+    setTimeout(() => {
+      this.active = false;
+    }, 1000);
   }
 
   typeDrink: any[] = [];
@@ -75,11 +80,13 @@ export class AddDrinkComponent implements OnInit {
 
   onSubmitForm(){
     if(this.addDrinkForm.valid){
+      this.isLoading = true;
       this.drinkService.addDrinkAWWS(this.createFormData()).subscribe(
         (res) => {
           this.createNotify('success', 'Thêm thực đơn thành công');
           this.addDrinkForm.reset();
           this.resetImage();
+          this.isLoading = false;
         },
         (err) => {
           this.createNotify('error', 'Đã xảy ra lỗi trong quá trinh thêm');
@@ -91,6 +98,10 @@ export class AddDrinkComponent implements OnInit {
         this.addDrinkForm.controls[i].updateValueAndValidity();
       }
     }
+  }
+
+  cancelForm(): void{
+    this.addDrinkForm.reset();
   }
 
   createNotify(type: string, content: string): void{

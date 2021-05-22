@@ -11,6 +11,7 @@ import { DrinkService } from '../../service/drink.service';
 export class UpdateDrinkComponent implements OnInit {
 
   DrinkArray: any[] = [];
+  active = true;
 
   constructor(private router: Router,
     private drinkService: DrinkService,) { }
@@ -26,12 +27,13 @@ export class UpdateDrinkComponent implements OnInit {
   turnBack(): void{
     this.router.navigate(['/drink']);
   }
-  
+
   getDrinks(){
     this.drinkService.getDrinksAWS().subscribe(
       (res) => {
         this.DrinkArray = res;
         this.drinkService.setSession(this.DrinkArray);
+        this.active = false;
       },
       (err) => {
 

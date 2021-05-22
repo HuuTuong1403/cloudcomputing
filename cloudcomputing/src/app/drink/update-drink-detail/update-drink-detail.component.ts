@@ -18,6 +18,8 @@ export class UpdateDrinkDetailComponent implements OnInit {
   upDateDrinkForm!: FormGroup;
   @ViewChild('ImageDrinkUpload') ImageDrinkUpload!: ElementRef;
   Image!: File;
+  active = true;
+  isLoading = false;
 
   constructor(private route: ActivatedRoute,
     private drinkService: DrinkService,
@@ -54,6 +56,7 @@ export class UpdateDrinkDetailComponent implements OnInit {
           DrinkType: this.drink.DrinkType,
           Image: this.drink.Image,
         })
+        this.active = false;
         console.log(this.drink);
       },
       (err) => {
@@ -99,10 +102,12 @@ export class UpdateDrinkDetailComponent implements OnInit {
 
   onSubmitForm(){
     if(this.upDateDrinkForm.valid){
+      this.isLoading = true;
       this.drinkService.updateDrink(this.upDateDrinkForm.value, this.drink.DrinkName).subscribe(
         (res) => {
           this.createNotify('success', 'Chỉnh sửa thực đơn thành công');
           console.log(res);
+          this.isLoading = false;
         },
         (err) => {
           console.log(err);

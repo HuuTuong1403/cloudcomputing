@@ -1,12 +1,11 @@
 <nz-layout class="w-full h-screen">
   <nz-header class="w-full">
     <ul nz-menu nzMode="horizontal" class="bg-white mx-28">
-      <li nz-menu-item nzSelected>nav 1</li>
-      <li nz-menu-item>nav 2</li>
-      <li nz-menu-item>nav 3</li>
+      <li nz-menu-item [nzSelected]="this.isSelected('/drink')" routerLink="/drink">Quản lý</li>
+      <li nz-menu-item [nzSelected]="this.isSelected('/menu')" routerLink="/menu">Thực đơn</li>
     </ul>
   </nz-header>
-  <nz-layout class="mt-5">
+  <nz-layout class="mt-5" *ngIf="!isRouter()">
     <nz-sider nzWidth="200px" nzTheme="light">
       <ul nz-menu nzMode="inline">
         <li nz-submenu nzIcon="appstore-add" nzTitle="Thức uống" nzOpen>
@@ -16,6 +15,10 @@
             <li nz-menu-item [nzSelected]="this.isSelected('/delete-drink')" routerLink="/drink/delete-drink">Xóa thức uống</li>
           </ul>
         </li>
+        <li nz-menu-item [nzSelected]="this.isSelected('/trash')" routerLink="/drink/trash">
+          <i nz-icon nzType="delete" nzTheme="outline"></i>
+          <span>Thùng rác</span>
+        </li>
       </ul>
     </nz-sider>
     <nz-layout class="h-full ml-5">
@@ -24,4 +27,13 @@
       </nz-content>
     </nz-layout>
   </nz-layout>
+  <div *ngIf="isRouter()">
+    <ng-container *ngTemplateOutlet="istrue"></ng-container>
+  </div>
 </nz-layout>
+
+<ng-template #istrue>
+  <router-outlet></router-outlet>
+</ng-template>
+
+

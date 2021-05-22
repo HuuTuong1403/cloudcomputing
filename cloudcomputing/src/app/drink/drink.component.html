@@ -1,11 +1,18 @@
-<div *ngIf="isSelect()" class="w-full h-full overflow-y-scroll">
+<div *ngIf="isSelect() && !active" class="w-full h-full overflow-y-scroll relative">
   <ng-container *ngTemplateOutlet="isTrue"></ng-container>
 </div>
-<div *ngIf="!isSelect()" class="w-full h-full overflow-y-scroll">
+<div *ngIf="!isSelect() && !active" class="w-full h-full overflow-y-scroll">
   <ng-container *ngTemplateOutlet="isFalse"></ng-container>
 </div>
 
+<div *ngIf="active">
+  <ng-container>
+    <nz-spin class="absolute top-1/2 left-1/2" [nzSpinning]="active" nzSimple [nzSize]="'large'"></nz-spin>
+  </ng-container>
+</div>
+
 <ng-template #isTrue>
+  <i [nzSpin]='true' nz-icon nzType="reload" nzTheme="outline"  class="absolute top-3 left-10 text-4xl cursor-pointer text-gray-400 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:text-black hover:border-none border-none" (click)="reLoad()"></i>
   <div class="my-5 text-3xl text-center font-bold">Các loại thức uống</div>
   <div class="w-full h-full flex items-center justify-center">
     <div class="w-3/4">

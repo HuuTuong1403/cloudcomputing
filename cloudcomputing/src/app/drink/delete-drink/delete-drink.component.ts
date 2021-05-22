@@ -13,6 +13,7 @@ export class DeleteDrinkComponent implements OnInit {
 
   DrinkArray: any[] = [];
   isVisible: boolean = false;
+  active = true;
 
   constructor(private router: Router,
     private drinkService: DrinkService,
@@ -44,6 +45,7 @@ export class DeleteDrinkComponent implements OnInit {
       (res) => {
         this.DrinkArray = res;
         this.drinkService.setSession(this.DrinkArray);
+        this.active = false;
       },
       (err) => {
 
