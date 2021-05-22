@@ -30,6 +30,20 @@ export class AddDrinkComponent implements OnInit {
       DrinkType: ["", Validators.required],
       Image: ["", [Validators.required ,RxwebValidators.extension({extensions:["jpeg", "png", "jpg"]})]]
     })
+    this.getDrinkType();
+  }
+
+  typeDrink: any[] = [];
+  getDrinkType(){
+    this.drinkService.getDrinkType().subscribe(
+      (res) => {
+        this.typeDrink = res;
+        console.log(res)
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
   }
 
   turnBack(): void{
@@ -41,7 +55,7 @@ export class AddDrinkComponent implements OnInit {
     this.Image = e.target.files[0];
     console.log(this.Image);
   }
-  
+
   isClear = false;
   resetImage(){
     this.isClear = !this.isClear;

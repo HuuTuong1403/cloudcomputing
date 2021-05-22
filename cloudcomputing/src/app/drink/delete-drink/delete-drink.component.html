@@ -1,1 +1,47 @@
-<p>delete-drink works!</p>
+<div class="w-full h-full relative">
+  <i nz-icon nzType="rollback" nzTheme="outline" class="absolute top-3 left-10 text-4xl cursor-pointer shadow-md" (click)="turnBack()"></i>
+  <div class="my-5 text-3xl text-center font-bold">Các loại thức uống</div>
+  <div class="w-full h-full flex items-center justify-center">
+    <div class="w-5/6">
+      <nz-table #basicTable nzBordered [nzData]="DrinkArray" [nzPageSize]="3">
+        <thead>
+          <tr>
+            <th>Ảnh</th>
+            <th>Tên thức uống</th>
+            <th>Mô tả</th>
+            <th>Giá</th>
+            <th>Loại</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of basicTable.data">
+          <tr>
+            <td class="w-28"><img class="w-28" src="{{ item.Image }}"></td>
+            <td>{{ item.DrinkName }}</td>
+            <td>{{ item.Description }}</td>
+            <td>{{ item.Price }}</td>
+            <td>{{ item.DrinkType }}</td>
+            <td><i class="text-xl cursor-pointer border-1 border-gray-100 rounded-md px-2 py-1 bg-green-300" nz-icon nzType="delete" nzTheme="outline" (click)="showModalDelete(item.DrinkName)" ></i></td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" [nzFooter]="null" (nzOnCancel)="cancelDetail()" nzCentered>
+  <div class="flex justify-center items-center">
+    <div class="w-full">
+      <div class="text-xl uppercase font-bold text-center">Xóa thực đơn</div>
+      <nz-divider></nz-divider>
+      <div class="text-center">
+        Bạn có muốn xóa {{ DrinkName }} không?
+      </div>
+      <nz-divider></nz-divider>
+      <div class="flex justify-center items-center w-full mt-5">
+        <button nz-button nzType='primary' nzDanger class="border-gray-400 border bg-red-400 rounded-xl px-6 py-1 mr-6" (click)="cancelDetail()">Không</button>
+        <button nz-button nzType='primary' class="border-gray-400 border bg-green-400 rounded-xl px-6 py-1 ml-6" (click)="deleteDrink()" [nzLoading]="isLoading">Có</button>
+      </div>
+    </div>
+  </div>
+</nz-modal>

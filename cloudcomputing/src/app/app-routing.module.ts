@@ -4,12 +4,14 @@ import { DrinkComponent } from './drink/drink.component';
 import { AddDrinkComponent } from './drink/add-drink/add-drink.component';
 import { UpdateDrinkComponent } from './drink/update-drink/update-drink.component';
 import { DeleteDrinkComponent } from './drink/delete-drink/delete-drink.component';
+import { UpdateDrinkDetailComponent } from './drink/update-drink-detail/update-drink-detail.component';
 
 const routes: Routes = [
   { path: 'drink', component: DrinkComponent, children: [
     { path: '', redirectTo: 'drink', pathMatch: 'full'},
     { path: 'add-drink', component: AddDrinkComponent},
     { path: 'update-drink', component: UpdateDrinkComponent},
+    { path: 'update-drink/:name', component: UpdateDrinkDetailComponent},
     { path: 'delete-drink', component: DeleteDrinkComponent }
   ]},
   { path: '', pathMatch: 'full', redirectTo: '/drink'},

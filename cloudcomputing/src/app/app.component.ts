@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +8,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'cloudcomputing';
 
-  constructor(private router: Router){}
+  constructor(private router: Router,
+    private title: Title){
+      title.setTitle("Trang chủ");
+    }
 
   isSelected(route: string): boolean{
     var router = '/drink' + route;

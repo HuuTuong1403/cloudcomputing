@@ -22,6 +22,9 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -31,6 +34,7 @@ import { DrinkComponent } from './drink/drink.component';
 import { AddDrinkComponent } from './drink/add-drink/add-drink.component';
 import { UpdateDrinkComponent } from './drink/update-drink/update-drink.component';
 import { DeleteDrinkComponent } from './drink/delete-drink/delete-drink.component';
+import { UpdateDrinkDetailComponent } from './drink/update-drink-detail/update-drink-detail.component';
 
 registerLocaleData(en);
 
@@ -40,7 +44,8 @@ registerLocaleData(en);
     DrinkComponent,
     AddDrinkComponent,
     UpdateDrinkComponent,
-    DeleteDrinkComponent
+    DeleteDrinkComponent,
+    UpdateDrinkDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -60,6 +65,9 @@ registerLocaleData(en);
     NzSelectModule,
     NzCardModule,
     NzNotificationModule,
+    NzModalModule,
+    NzDividerModule,
+    NzButtonModule,
 
     MatIconModule,
     MatSidenavModule,

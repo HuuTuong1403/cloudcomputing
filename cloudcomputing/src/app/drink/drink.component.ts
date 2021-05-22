@@ -15,7 +15,7 @@ export class DrinkComponent implements OnInit{
   constructor(private router: Router,
               private drinkService: DrinkService,
               private route: ActivatedRoute) {}
-  
+
   ngOnInit(): void {
     this.isSelect();
     this.getDrinks();
@@ -29,6 +29,7 @@ export class DrinkComponent implements OnInit{
     this.drinkService.getDrinksAWS().subscribe(
       (res) => {
         this.DrinkArray = res;
+        this.drinkService.setSession(this.DrinkArray);
       },
       (err) => {
 
