@@ -9,14 +9,14 @@
 
 <ng-template #drink>
   <div class="w-full h-full relative">
-    <i nz-icon nzType="rollback" nzTheme="outline" class="absolute top-3 left-10 text-4xl cursor-pointer text-gray-400 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:text-black hover:border-none border-none" (click)="turnBack()"></i>
+    <i nz-icon nzType="rollback" nzTheme="outline" class="absolute top-1 md:top-3 left-5 md:left-10 text-2xl md:text-4xl cursor-pointer text-gray-400 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:text-black hover:border-none border-none" (click)="turnBack()"></i>
     <div class="my-5 text-3xl text-center font-bold">Các loại thức uống</div>
-    <div class="w-full h-full flex items-center justify-center">
-      <div class="w-5/6">
+    <div class="md:flex md:items-center md:justify-center mx-3 mt-3 md:mx-0 md:mt-0">
+      <div class="w-full md:w-3/4">
         <nz-table #basicTable nzBordered [nzData]="DrinkArray" [nzPageSize]="3">
           <thead>
             <tr>
-              <th>Ảnh</th>
+              <th class="imgth">Ảnh</th>
               <th>Tên thức uống</th>
               <th>Mô tả</th>
               <th>Giá</th>
@@ -26,7 +26,7 @@
           </thead>
           <tbody *ngFor="let item of basicTable.data">
             <tr>
-              <td class="w-28"><img class="w-28" src="{{ item.Image }}"></td>
+              <td class="img w-28"><img class="w-28" src="{{ item.Image }}"></td>
               <td>{{ item.DrinkName }}</td>
               <td>{{ item.Description }}</td>
               <td>{{ item.Price }}</td>

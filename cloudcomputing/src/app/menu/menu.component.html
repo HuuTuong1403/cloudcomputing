@@ -1,1 +1,26 @@
-<p>menu works!</p>
+<div *ngIf="active" class="relative w-full">
+  <ng-container>
+    <nz-spin class="absolute top-1/2 left-1/2" [nzSpinning]="active" nzSimple [nzSize]="'large'"></nz-spin>
+  </ng-container>
+</div>
+<div *ngIf="!active">
+  <ng-container *ngTemplateOutlet="drink"></ng-container>
+</div>
+
+<ng-template #drink>
+  <div class="w-full">
+    <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+      <div *ngFor="let item of DrinkArray">
+        <nz-card [nzHoverable]="true" [nzCover]="imgDrink" class="w-3/4 mr-auto ml-auto my-4 rounded-xl cursor-default">
+          <ng-template #imgDrink>
+            <img src="{{ item.Image }}" >
+          </ng-template>
+          <a [routerLink]="['/menu/', item.DrinkName]" class="hover:text-yellow-400 font-bold transition duration-200 text-lg uppercase">{{ item.DrinkName }}</a>
+          <div class="text-xl text-yellow-400 font-bold mt-4">{{ item.Price }} Đ</div>
+        </nz-card>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+

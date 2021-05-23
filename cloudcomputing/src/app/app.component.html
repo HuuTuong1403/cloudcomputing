@@ -1,12 +1,12 @@
-<nz-layout class="w-full h-screen">
-  <nz-header class="w-full">
-    <ul nz-menu nzMode="horizontal" class="bg-white mx-28">
+<nz-layout class="w-full h-full">
+  <nz-header class="w-full bg-gray-500">
+    <ul nz-menu nzMode="horizontal" class="w-full bg-white">
       <li nz-menu-item [nzSelected]="this.isSelected('/drink')" routerLink="/drink">Quản lý</li>
       <li nz-menu-item [nzSelected]="this.isSelected('/menu')" routerLink="/menu">Thực đơn</li>
     </ul>
   </nz-header>
   <nz-layout class="mt-5" *ngIf="!isRouter()">
-    <nz-sider nzWidth="200px" nzTheme="light">
+    <nz-sider nzTheme="light" nzCollapsible nzBreakpoint="md" [nzCollapsedWidth]="0">
       <ul nz-menu nzMode="inline">
         <li nz-submenu nzIcon="appstore-add" nzTitle="Thức uống" nzOpen>
           <ul>
@@ -33,7 +33,9 @@
 </nz-layout>
 
 <ng-template #istrue>
-  <router-outlet></router-outlet>
+  <nz-layout class="h-full w-full">
+    <router-outlet></router-outlet>
+  </nz-layout>
 </ng-template>
 
 

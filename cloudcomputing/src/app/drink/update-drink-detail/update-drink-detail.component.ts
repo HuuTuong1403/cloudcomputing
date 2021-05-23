@@ -48,7 +48,6 @@ export class UpdateDrinkDetailComponent implements OnInit {
     this.drinkService.getDrinkByDrinkName(name).subscribe(
       (res) =>{
         this.drink = res[0];
-        console.log(this.drink.Image);
         this.upDateDrinkForm.patchValue({
           DrinkName: this.drink.DrinkName,
           Description: this.drink.Description,
@@ -57,7 +56,6 @@ export class UpdateDrinkDetailComponent implements OnInit {
           Image: this.drink.Image,
         })
         this.active = false;
-        console.log(this.drink);
       },
       (err) => {
         console.log(err);
@@ -68,7 +66,6 @@ export class UpdateDrinkDetailComponent implements OnInit {
   onFileChangedoc(e: any) {
     this.isClear = true;
     this.Image = e.target.files[0];
-    console.log(this.Image);
   }
 
   isClear = false;
@@ -106,11 +103,9 @@ export class UpdateDrinkDetailComponent implements OnInit {
       this.drinkService.updateDrink(this.upDateDrinkForm.value, this.drink.DrinkName).subscribe(
         (res) => {
           this.createNotify('success', 'Chỉnh sửa thực đơn thành công');
-          console.log(res);
           this.isLoading = false;
         },
         (err) => {
-          console.log(err);
           this.createNotify('error', 'Đã xảy ra lỗi trong quá trinh sửa');
         })
     }

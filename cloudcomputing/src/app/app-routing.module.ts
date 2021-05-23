@@ -8,9 +8,9 @@ import { UpdateDrinkDetailComponent } from './drink/update-drink-detail/update-d
 import { TrashComponent } from './drink/trash/trash.component';
 
 import { MenuComponent } from './menu/menu.component';
+import { MenuDetailComponent } from './menu/menu-detail/menu-detail.component';
 
 const routes: Routes = [
-  { path: 'menu', component: MenuComponent },
   { path: 'drink', component: DrinkComponent, children: [
     { path: '', redirectTo: 'drink', pathMatch: 'full'},
     { path: 'trash', component: TrashComponent},
@@ -19,6 +19,8 @@ const routes: Routes = [
     { path: 'update-drink/:name', component: UpdateDrinkDetailComponent},
     { path: 'delete-drink', component: DeleteDrinkComponent }
   ]},
+  { path: 'menu', component: MenuComponent },
+  { path: 'menu/:name', component: MenuDetailComponent },
   { path: '', pathMatch: 'full', redirectTo: '/drink'},
 
 ];

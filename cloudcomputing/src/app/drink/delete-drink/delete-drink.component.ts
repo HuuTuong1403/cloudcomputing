@@ -48,7 +48,7 @@ export class DeleteDrinkComponent implements OnInit {
         this.active = false;
       },
       (err) => {
-
+        this.createNotify('error', 'Đã xảy ra lỗi');
       }
     )
   }

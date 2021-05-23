@@ -39,14 +39,14 @@ export class AddDrinkComponent implements OnInit {
   }
 
   typeDrink: any[] = [];
+
   getDrinkType(){
     this.drinkService.getDrinkType().subscribe(
       (res) => {
         this.typeDrink = res;
-        console.log(res)
       },
       (err) => {
-        console.log(err);
+        this.createNotify('error', 'Đã xảy ra lỗi');
       }
     )
   }

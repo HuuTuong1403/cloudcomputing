@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { DrinkService } from '../service/drink.service';
 import { Title } from '@angular/platform-browser';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-drink',
@@ -16,8 +17,8 @@ export class DrinkComponent implements OnInit{
 
   constructor(private router: Router,
               private drinkService: DrinkService,
-              private route: ActivatedRoute,
-              private title: Title) {}
+              private title: Title,
+              private notify: NzNotificationService) {}
 
   ngOnInit(): void {
     this.title.setTitle('Quản lý');
@@ -42,7 +43,14 @@ export class DrinkComponent implements OnInit{
         this.active = false;
       },
       (err) => {
-
+        this.notify.create(
+          'error',
+          'Thông báo',
+          'Đã xảy ra lỗi',
+          {
+            nzStyle: {'background-color': '#FFCCCC'}
+          }
+        );
       })
   }
 

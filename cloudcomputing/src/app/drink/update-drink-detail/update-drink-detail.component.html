@@ -9,11 +9,11 @@
 
 <ng-template #drinkDetail>
   <div class="w-full h-full flex items-center justify-center relative mb-10">
-    <i nz-icon nzType="rollback" nzTheme="outline" class="absolute top-3 left-10 text-4xl cursor-pointer text-gray-400 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:text-black hover:border-none border-none" (click)="turnBack()"></i>
-    <nz-card class="w-3/4 h-full ml-10 mt-8 cursor-default" [nzHoverable]="true" >
-      <div class="mb-5 text-3xl text-center font-bold">Chỉnh sửa thực đơn</div>
+    <i nz-icon nzType="rollback" nzTheme="outline" class="absolute top-1 md:top-3 left-5 md:left-10 text-2xl md:text-4xl cursor-pointer text-gray-400 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:text-black hover:border-none border-none" (click)="turnBack()"></i>
+    <nz-card class="w-full md:w-3/4 ml-10 mt-8 cursor-default" [nzHoverable]="true" >
+      <div class="mb-5 ml-12 md:ml-0 text-3xl text-center font-bold">Chỉnh sửa thực đơn</div>
 
-      <img src="{{ drink.Image }}" class="w-28 rounded-3xl absolute left-0 top-0 ml-2 mt-2 shadow-xl">
+      <img src="{{ drink.Image }}" class="w-16 md:w-20 xl:w-28 rounded-lg md:rounded-xl xl:rounded-3xl absolute left-0 top-0 ml-2 mt-2 shadow-md xl:shadow-xl">
 
       <form nz-form [formGroup]="upDateDrinkForm" (ngSubmit)="onSubmitForm()" *ngIf="drink">
         <nz-form-item>
@@ -58,7 +58,7 @@
           <nz-form-label class="text-xl" [nzSm]="6" [nzXs]="24" nzFor="Image">Thêm hình ảnh</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorImage">
             <label for="Image" class="cursor-pointer px-10 py-3 rounded-xl transition duration-500 ease-in-out bg-yellow-300 hover:bg-yellow-400 transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:border-none border-none font-bold uppercase shadow-md"><i class="text-xl mr-3" nz-icon nzType="cloud-upload" nzTheme="outline"></i>Upload Image</label>
-            <span *ngIf="Image && isClear" class="text-base ml-3">{{ Image.name }}<i class="text-xl ml-3 cursor-pointer border-1 border-gray-100 rounded-md px-2 py-1 bg-green-300" (click)="resetImage()" nz-icon nzType="delete" nzTheme="outline"></i></span>
+            <p *ngIf="Image && isClear" class="overflow-hidden md:overflow-auto text-base ml-3 mt-2 md:mt-0">{{ Image.name }}<i class="text-xl ml-0 md:ml-3 cursor-pointer border-1 border-gray-100 rounded-md px-2 py-1 bg-green-300" (click)="resetImage()" nz-icon nzType="delete" nzTheme="outline"></i></p>
             <input class="text-base hidden" type="file" nz-input id="Image" formControlName="Image" (change)="onFileChangedoc($event)" accept=".jpeg,.jpg,.png" #ImageDrinkUpload>
             <ng-template #errorImage let-control>
               <ng-container *ngIf="control.hasError('extension')">

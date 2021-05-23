@@ -17,6 +17,9 @@ export class AppComponent {
       router = route;
       return true;
     }
+    else if(route == '/menu'){
+      router = route;
+    }
     else{
       router = '/drink' + route
     }
@@ -24,10 +27,9 @@ export class AppComponent {
   }
 
   isRouter(): boolean{
-    if(this.router.url != '/menu'){
+    if(this.router.url == '/drink' || this.router.url == '/drink/add-drink' || this.router.url == '/drink/update-drink' || this.router.url == '/drink/delete-drink' || this.router.url == '/drink/trash' ){
       return false;
     }
-
     return true;
   }
 }
