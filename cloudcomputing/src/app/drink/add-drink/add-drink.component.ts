@@ -58,7 +58,6 @@ export class AddDrinkComponent implements OnInit {
   onFileChangedoc(e: any) {
     this.isClear = true;
     this.Image = e.target.files[0];
-    console.log(this.Image);
   }
 
   isClear = false;

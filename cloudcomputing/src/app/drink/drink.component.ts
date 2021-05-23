@@ -39,7 +39,6 @@ export class DrinkComponent implements OnInit{
     this.drinkService.getDrinksAWS().subscribe(
       (res) => {
         this.DrinkArray = res;
-        this.drinkService.setSession(this.DrinkArray);
         this.active = false;
       },
       (err) => {

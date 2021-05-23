@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpParams, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +17,18 @@ export class DrinkService {
     return this.http.get<any[]>(this.url + 'drinks')
   }
 
-  setSession(data: any[]){
-    localStorage.setItem("drinks", JSON.stringify(data));
+  setSession(data: any){
+    sessionStorage.setItem("linkImage", data);
   }
 
   getSession(){
-    var data: any[] = [];
-    data = JSON.parse(localStorage.drinks);
+    var data: any;
+    data = sessionStorage.linkImage;
     return data;
+  }
+
+  deleteSession(){
+    sessionStorage.clear();
   }
 
   addDrinkAWWS(formAddDrink: FormData): Observable<any>{

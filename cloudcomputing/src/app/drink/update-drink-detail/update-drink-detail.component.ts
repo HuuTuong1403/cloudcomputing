@@ -17,9 +17,10 @@ export class UpdateDrinkDetailComponent implements OnInit {
   drink!: any;
   upDateDrinkForm!: FormGroup;
   @ViewChild('ImageDrinkUpload') ImageDrinkUpload!: ElementRef;
-  Image!: File;
+
   active = true;
   isLoading = false;
+  Image!: File;
 
   constructor(private route: ActivatedRoute,
     private drinkService: DrinkService,
@@ -58,7 +59,7 @@ export class UpdateDrinkDetailComponent implements OnInit {
         this.active = false;
       },
       (err) => {
-        console.log(err);
+        this.createNotify('error', 'Đã xảy ra lỗi trong quá trinh sửa');
       }
     )
   }
@@ -66,6 +67,7 @@ export class UpdateDrinkDetailComponent implements OnInit {
   onFileChangedoc(e: any) {
     this.isClear = true;
     this.Image = e.target.files[0];
+    console.log(this.Image);
   }
 
   isClear = false;
@@ -79,7 +81,7 @@ export class UpdateDrinkDetailComponent implements OnInit {
     let input = new FormData();
     input.append("DrinkName", this.upDateDrinkForm.get('DrinkName')?.value);
     input.append("Description", this.upDateDrinkForm.controls['Description'].value);
-    input.append("Image", this.Image);
+    input.append("Image", this.Image, this.Image.name);
     input.append("DrinkType", this.upDateDrinkForm.controls['DrinkType'].value);
     input.append("Price", this.upDateDrinkForm.controls['Price'].value);
     return input
@@ -92,7 +94,7 @@ export class UpdateDrinkDetailComponent implements OnInit {
         this.typeDrink = res;
       },
       (err) => {
-        console.log(err);
+        this.createNotify('error', 'Đã xảy ra lỗi trong quá trinh sửa');
       }
     )
   }
