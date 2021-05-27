@@ -67,7 +67,6 @@ export class UpdateDrinkDetailComponent implements OnInit {
   onFileChangedoc(e: any) {
     this.isClear = true;
     this.Image = e.target.files[0];
-    console.log(this.Image);
   }
 
   isClear = false;
@@ -89,22 +88,14 @@ export class UpdateDrinkDetailComponent implements OnInit {
     )
   }
 
-  uploadFile(){
-    let input = new FormData();
-    input.append('upload_preset', 'coffee-aws');
-    input.append('file', this.Image);
-    this.drinkService.uploadFile(input).subscribe(
-      (res) => {
-        console.log(res.secure_url);
-      },
-      (err) => {
-        console.log(err);
-      }
-    )
-  }
-
-  createFormData(): any{
-
+  createFormData(Image: string): FormData{
+    let formUpdate = new FormData();
+    formUpdate.append("DrinkName", this.upDateDrinkForm.get('DrinkName')?.value);
+    formUpdate.append("Description", this.upDateDrinkForm.controls['Description'].value);
+    formUpdate.append("DrinkType", this.upDateDrinkForm.controls['DrinkType'].value);
+    formUpdate.append("Price", this.upDateDrinkForm.controls['Price'].value);
+    formUpdate.append('Image', Image);
+    return formUpdate;
   }
 
   onSubmitForm(){
@@ -114,31 +105,40 @@ export class UpdateDrinkDetailComponent implements OnInit {
       uploadFile.append('upload_preset', 'coffee-aws');
       if(this.Image != null){
         uploadFile.append('file', this.Image);
+        this.drinkService.uploadFile(uploadFile).subscribe(
+          (res) => {
+            let formUpdate = this.createFormData(res.secure_url);
+            this.drinkService.updateDrink(formUpdate, this.drink.DrinkName).subscribe(
+              (res) => {
+                this.createNotify('success', 'Chỉnh sửa thực đơn thành công');
+                this.isLoading = false;
+                this.ImageDrinkUpload.nativeElement.value = "";
+                this.isClear = false;
+                this.ngOnInit();
+              },
+              (err) => {
+                this.createNotify('error', 'Đã xảy ra lỗi trong quá trinh sửa');
+              })
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
       }
       else{
-        uploadFile.append('file', this.drink.Image);
+        let data = this.createFormData(this.drink.Image);
+        this.drinkService.updateDrink(data, this.drink.DrinkName).subscribe(
+          (res) => {
+            this.createNotify('success', 'Chỉnh sửa thực đơn thành công');
+            this.isLoading = false;
+            this.ImageDrinkUpload.nativeElement.value = "";
+            this.isClear = false;
+            this.ngOnInit();
+          },
+          (err) => {
+            this.createNotify('error', 'Đã xảy ra lỗi trong quá trinh sửa');
+          });
       }
-      this.drinkService.uploadFile(uploadFile).subscribe(
-        (res) => {
-          let formUpdate = new FormData();
-          formUpdate.append("DrinkName", this.upDateDrinkForm.get('DrinkName')?.value);
-          formUpdate.append("Description", this.upDateDrinkForm.controls['Description'].value);
-          formUpdate.append("DrinkType", this.upDateDrinkForm.controls['DrinkType'].value);
-          formUpdate.append("Price", this.upDateDrinkForm.controls['Price'].value);
-          formUpdate.append('Image', res.secure_url);
-          this.drinkService.updateDrink(formUpdate, this.drink.DrinkName).subscribe(
-            (res) => {
-              this.createNotify('success', 'Chỉnh sửa thực đơn thành công');
-              this.isLoading = false;
-            },
-            (err) => {
-              this.createNotify('error', 'Đã xảy ra lỗi trong quá trinh sửa');
-            })
-        },
-        (err) => {
-          console.log(err);
-        }
-      )
     }
     else{
       for(const i in this.upDateDrinkForm.controls){
