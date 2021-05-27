@@ -41,6 +41,9 @@ import { MenuComponent } from './menu/menu.component';
 import { TrashComponent } from './drink/trash/trash.component';
 import { MenuDetailComponent } from './menu/menu-detail/menu-detail.component';
 
+import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular-5.x';
+import { Cloudinary } from 'cloudinary-core';
+
 registerLocaleData(en);
 
 @NgModule({
@@ -63,6 +66,7 @@ registerLocaleData(en);
     ReactiveFormsModule,
     RxReactiveFormsModule,
     HttpClientModule,
+    CloudinaryModule.forRoot({Cloudinary}, { cloud_name: 'university-of-education-technology' } as CloudinaryConfiguration),
 
     NzLayoutModule,
     NzMenuModule,

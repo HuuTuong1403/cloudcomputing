@@ -62,4 +62,8 @@ export class DrinkService {
   restoreDrink(DrinkName: string): Observable<any>{
     return this.http.delete<any>(this.url + 'drinks/restore-drink', {  params: { DrinkName }});
   }
+
+  uploadFile(formdata: FormData): Observable<any>{
+    return this.http.post<any>('https://api.cloudinary.com/v1_1/university-of-education-technology/image/upload', formdata);
+  }
 }

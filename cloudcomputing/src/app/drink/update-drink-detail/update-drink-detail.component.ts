@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DrinkService } from '../../service/drink.service';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
@@ -77,16 +77,6 @@ export class UpdateDrinkDetailComponent implements OnInit {
     this.upDateDrinkForm.controls['Image'].setValue("");
   }
 
-  createFormData(): any{
-    let input = new FormData();
-    input.append("DrinkName", this.upDateDrinkForm.get('DrinkName')?.value);
-    input.append("Description", this.upDateDrinkForm.controls['Description'].value);
-    input.append("Image", this.Image, this.Image.name);
-    input.append("DrinkType", this.upDateDrinkForm.controls['DrinkType'].value);
-    input.append("Price", this.upDateDrinkForm.controls['Price'].value);
-    return input
-  }
-
   typeDrink: any[] = [];
   getDrinkType(): void{
     this.drinkService.getDrinkType().subscribe(
@@ -99,17 +89,56 @@ export class UpdateDrinkDetailComponent implements OnInit {
     )
   }
 
+  uploadFile(){
+    let input = new FormData();
+    input.append('upload_preset', 'coffee-aws');
+    input.append('file', this.Image);
+    this.drinkService.uploadFile(input).subscribe(
+      (res) => {
+        console.log(res.secure_url);
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
+  }
+
+  createFormData(): any{
+
+  }
+
   onSubmitForm(){
     if(this.upDateDrinkForm.valid){
       this.isLoading = true;
-      this.drinkService.updateDrink(this.upDateDrinkForm.value, this.drink.DrinkName).subscribe(
+      let uploadFile = new FormData();
+      uploadFile.append('upload_preset', 'coffee-aws');
+      if(this.Image != null){
+        uploadFile.append('file', this.Image);
+      }
+      else{
+        uploadFile.append('file', this.drink.Image);
+      }
+      this.drinkService.uploadFile(uploadFile).subscribe(
         (res) => {
-          this.createNotify('success', 'Chỉnh sửa thực đơn thành công');
-          this.isLoading = false;
+          let formUpdate = new FormData();
+          formUpdate.append("DrinkName", this.upDateDrinkForm.get('DrinkName')?.value);
+          formUpdate.append("Description", this.upDateDrinkForm.controls['Description'].value);
+          formUpdate.append("DrinkType", this.upDateDrinkForm.controls['DrinkType'].value);
+          formUpdate.append("Price", this.upDateDrinkForm.controls['Price'].value);
+          formUpdate.append('Image', res.secure_url);
+          this.drinkService.updateDrink(formUpdate, this.drink.DrinkName).subscribe(
+            (res) => {
+              this.createNotify('success', 'Chỉnh sửa thực đơn thành công');
+              this.isLoading = false;
+            },
+            (err) => {
+              this.createNotify('error', 'Đã xảy ra lỗi trong quá trinh sửa');
+            })
         },
         (err) => {
-          this.createNotify('error', 'Đã xảy ra lỗi trong quá trinh sửa');
-        })
+          console.log(err);
+        }
+      )
     }
     else{
       for(const i in this.upDateDrinkForm.controls){
